@@ -1,17 +1,30 @@
 // TODO:
 // 1. Don't allow selector to go outside of boundaries
-// 2. implement block placement
+// 2. Zoom out
+// 3. Multiple block placement
+// 4. Big Block placement
+// 5. Verify Game save works with engine
+// 6. Maybe merge into game engine?
+
+#[derive(Copy, Clone)]
+pub enum Blocks {
+    GRASS = 0,
+    STONE = 1,
+    PLAYER = 2,
+}
+
+impl Blocks {
+    fn to_u8(self) -> u8 {
+        self as u8
+    }
+}
 
 mod level {
 
+    use crate::Blocks;
     use raylib::prelude::*;
-
-    #[derive(Copy, Clone)]
-    pub enum Blocks {
-        GRASS,
-        STONE,
-        PLAYER,
-    }
+    use std::fs::File;
+    use std::io::{self, Write};
 
     pub struct Level {
         pub data: [[Blocks; 16]; 16],
@@ -64,12 +77,26 @@ mod level {
                 }
             }
         }
+
+        pub fn data_to_file(&self, file_name: &str) -> io::Result<()> {
+            let mut file = File::create(file_name)?;
+
+            for row in &self.data {
+                for &block in row {
+                    file.write_all(&[block.to_u8()])?;
+                }
+            }
+
+            println!("Level data saved to {}", file_name);
+            Ok(())
+        }
     }
 }
 
 mod selector {
 
     use crate::level::*;
+    use crate::Blocks;
     use raylib::prelude::*;
     use std::os::raw::c_int;
 
@@ -121,8 +148,11 @@ mod selector {
                     self.x += 64.0;
                 }
 
-                if ffi::IsKeyPressed(ffi::KeyboardKey::KEY_B as c_int) {
+                if ffi::IsKeyPressed(ffi::KeyboardKey::KEY_W as c_int) {
                     level.data[self.x as usize / 64][self.y as usize / 64] = Blocks::GRASS;
+                }
+                if ffi::IsKeyPressed(ffi::KeyboardKey::KEY_S as c_int) {
+                    let _ = level.data_to_file("data.cade");
                 }
             }
         }
