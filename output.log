@@ -1,0 +1,139 @@
+   Compiling raylib v5.0.2
+error[E0308]: mismatched types
+   --> /home/cade/.cargo/registry/src/index.crates.io-6f17d22bba15001f/raylib-5.0.2/src/core/callbacks.rs:184:13
+    |
+155 |                 $rawsetter(Some($ogfunc));
+    |                            ---- arguments to this enum variant are incorrect
+...
+184 |             custom_save_file_data_callback,
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected fn pointer, found fn item
+    |
+    = note: expected fn pointer `unsafe extern "C" fn(*const u8, _, _) -> _`
+                  found fn item `extern "C" fn(*const i8, _, _) -> _ {custom_save_file_data_callback}`
+help: the type constructed contains `extern "C" fn(*const i8, *mut c_void, i32) -> bool {custom_save_file_data_callback}` due to the type of the argument passed
+   --> /home/cade/.cargo/registry/src/index.crates.io-6f17d22bba15001f/raylib-5.0.2/src/core/callbacks.rs:155:28
+    |
+155 |                   $rawsetter(Some($ogfunc));
+    |                              ^^^^^^^^^^^^^
+...
+179 | /         safe_callback_set_func!(
+180 | |             cb,
+181 | |             save_file_data_callback,
+182 | |             set_save_file_data_callback,
+183 | |             ffi::SetSaveFileDataCallback,
+184 | |             custom_save_file_data_callback,
+    | |             ------------------------------ this argument influences the type of `Some`
+185 | |             "save file data"
+186 | |         );
+    | |_________- in this macro invocation
+note: tuple variant defined here
+   --> /home/cade/.rustup/toolchains/stable-aarch64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/option.rs:580:5
+    |
+580 |     Some(#[stable(feature = "rust1", since = "1.0.0")] T),
+    |     ^^^^
+    = note: this error originates in the macro `safe_callback_set_func` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0308]: mismatched types
+   --> /home/cade/.cargo/registry/src/index.crates.io-6f17d22bba15001f/raylib-5.0.2/src/core/callbacks.rs:200:13
+    |
+155 |                 $rawsetter(Some($ogfunc));
+    |                            ---- arguments to this enum variant are incorrect
+...
+200 |             custom_load_file_data_callback,
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected fn pointer, found fn item
+    |
+    = note: expected fn pointer `unsafe extern "C" fn(*const u8, _) -> _`
+                  found fn item `extern "C" fn(*const i8, _) -> _ {custom_load_file_data_callback}`
+help: the type constructed contains `extern "C" fn(*const i8, *mut i32) -> *mut u8 {custom_load_file_data_callback}` due to the type of the argument passed
+   --> /home/cade/.cargo/registry/src/index.crates.io-6f17d22bba15001f/raylib-5.0.2/src/core/callbacks.rs:155:28
+    |
+155 |                   $rawsetter(Some($ogfunc));
+    |                              ^^^^^^^^^^^^^
+...
+195 | /         safe_callback_set_func!(
+196 | |             cb,
+197 | |             load_file_data_callback,
+198 | |             set_load_file_data_callback,
+199 | |             ffi::SetLoadFileDataCallback,
+200 | |             custom_load_file_data_callback,
+    | |             ------------------------------ this argument influences the type of `Some`
+201 | |             "load file data"
+202 | |         );
+    | |_________- in this macro invocation
+note: tuple variant defined here
+   --> /home/cade/.rustup/toolchains/stable-aarch64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/option.rs:580:5
+    |
+580 |     Some(#[stable(feature = "rust1", since = "1.0.0")] T),
+    |     ^^^^
+    = note: this error originates in the macro `safe_callback_set_func` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0308]: mismatched types
+   --> /home/cade/.cargo/registry/src/index.crates.io-6f17d22bba15001f/raylib-5.0.2/src/core/callbacks.rs:214:13
+    |
+155 |                 $rawsetter(Some($ogfunc));
+    |                            ---- arguments to this enum variant are incorrect
+...
+214 |             custom_save_file_text_callback,
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected fn pointer, found fn item
+    |
+    = note: expected fn pointer `unsafe extern "C" fn(*const u8, *mut u8) -> _`
+                  found fn item `extern "C" fn(*const i8, *mut i8) -> _ {custom_save_file_text_callback}`
+help: the type constructed contains `extern "C" fn(*const i8, *mut i8) -> bool {custom_save_file_text_callback}` due to the type of the argument passed
+   --> /home/cade/.cargo/registry/src/index.crates.io-6f17d22bba15001f/raylib-5.0.2/src/core/callbacks.rs:155:28
+    |
+155 |                   $rawsetter(Some($ogfunc));
+    |                              ^^^^^^^^^^^^^
+...
+209 | /         safe_callback_set_func!(
+210 | |             cb,
+211 | |             save_file_text_callback,
+212 | |             set_save_file_text_callback,
+213 | |             ffi::SetSaveFileTextCallback,
+214 | |             custom_save_file_text_callback,
+    | |             ------------------------------ this argument influences the type of `Some`
+215 | |             "load file data"
+216 | |         )
+    | |_________- in this macro invocation
+note: tuple variant defined here
+   --> /home/cade/.rustup/toolchains/stable-aarch64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/option.rs:580:5
+    |
+580 |     Some(#[stable(feature = "rust1", since = "1.0.0")] T),
+    |     ^^^^
+    = note: this error originates in the macro `safe_callback_set_func` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0308]: mismatched types
+   --> /home/cade/.cargo/registry/src/index.crates.io-6f17d22bba15001f/raylib-5.0.2/src/core/callbacks.rs:230:13
+    |
+155 |                 $rawsetter(Some($ogfunc));
+    |                            ---- arguments to this enum variant are incorrect
+...
+230 |             custom_load_file_text_callback,
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected fn pointer, found fn item
+    |
+    = note: expected fn pointer `unsafe extern "C" fn(*const u8) -> *mut u8`
+                  found fn item `extern "C" fn(*const i8) -> *mut i8 {custom_load_file_text_callback}`
+help: the type constructed contains `extern "C" fn(*const i8) -> *mut i8 {custom_load_file_text_callback}` due to the type of the argument passed
+   --> /home/cade/.cargo/registry/src/index.crates.io-6f17d22bba15001f/raylib-5.0.2/src/core/callbacks.rs:155:28
+    |
+155 |                   $rawsetter(Some($ogfunc));
+    |                              ^^^^^^^^^^^^^
+...
+225 | /         safe_callback_set_func!(
+226 | |             cb,
+227 | |             load_file_text_callback,
+228 | |             set_load_file_text_callback,
+229 | |             ffi::SetLoadFileTextCallback,
+230 | |             custom_load_file_text_callback,
+    | |             ------------------------------ this argument influences the type of `Some`
+231 | |             "load file text"
+232 | |         )
+    | |_________- in this macro invocation
+note: tuple variant defined here
+   --> /home/cade/.rustup/toolchains/stable-aarch64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/option.rs:580:5
+    |
+580 |     Some(#[stable(feature = "rust1", since = "1.0.0")] T),
+    |     ^^^^
+    = note: this error originates in the macro `safe_callback_set_func` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+For more information about this error, try `rustc --explain E0308`.
+error: could not compile `raylib` (lib) due to 4 previous errors
