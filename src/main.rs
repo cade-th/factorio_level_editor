@@ -5,8 +5,9 @@
 // 4. color/ more varied map
 // 5. Block Collision Detection
 
-const SCREEN_WIDTH: u32 = 1024;
-const SCREEN_HEIGHT: u32 = 1024;
+const SCREEN_WIDTH: i32 = 1024;
+const SCREEN_HEIGHT: i32 = 1024;
+const WORLD_SIZE: usize = 16;
 
 use raylib::prelude::*;
 use render::Renderer;
@@ -26,28 +27,19 @@ fn main() {
         .load_texture(&thread, "./player_sheet.png")
         .expect("Failed to load texture");
 
-    let mut world = World::new();
-
-    let tile_size = 64.0;
+    let mut world = World::new(WORLD_SIZE);
 
     let mut selector = Selector::new();
 
-    let renderer = Renderer::new();
-
-    let mut camera = Camera2D {
-        target: Vector2::new(selector.x as f32, selector.y as f32),
-        offset: Vector2::new(selector.x as f32 + 512.0, selector.y as f32 + 512.0),
-        rotation: 0.0,
-        zoom: 1.0,
-    };
+    let mut renderer = Renderer::new(&selector);
 
     rl.set_target_fps(60);
 
     while !rl.window_should_close() {
         let mut d = rl.begin_drawing(&thread);
 
-        selector.mov(&mut world, &mut camera, tile_size);
+        selector.mov(&mut world, &mut renderer.camera);
         d.clear_background(Color::BLACK);
-        renderer.render(&mut d, &texture_atlas, &world, &selector, &camera);
+        renderer.render(&mut d, &texture_atlas, &world, &selector);
     }
 }

@@ -1,7 +1,7 @@
+use raylib::prelude::*;
 use std::fs::File;
 use std::io::{self, Write};
 
-const WORLD_SIZE: usize = 32;
 #[derive(Copy, Clone, Debug)]
 pub enum Blocks {
     GRASS = 0,
@@ -16,13 +16,77 @@ impl Blocks {
 }
 
 pub struct World {
-    pub data: [[Blocks; WORLD_SIZE]; WORLD_SIZE],
+    pub data: Vec<Vec<Blocks>>,
+    pub tile_size: f32,
+    pub size: usize,
 }
 
 impl World {
-    pub fn new() -> Self {
+    pub fn new(size: usize) -> Self {
         World {
-            data: [[Blocks::STONE; WORLD_SIZE]; WORLD_SIZE],
+            data: vec![vec![Blocks::GRASS; size as usize]; size as usize],
+            size,
+            tile_size: (size as f32 * size as f32),
+        }
+    }
+
+    fn entity_to_screen(entity_pos: Vector2, camera: &Camera2D) -> Vector2 {
+        Vector2::new(
+            (entity_pos.x - camera.target.x) * camera.zoom + camera.offset.x,
+            (entity_pos.y - camera.target.y) * camera.zoom + camera.offset.y,
+        )
+    }
+
+    pub fn render(&self, d: &mut RaylibDrawHandle, texture_atlas: &Texture2D, camera: &Camera2D) {
+        let _ = d.begin_mode2D(*camera);
+
+        for i in 0..self.data.len() {
+            for j in 0..self.data[0].len() {
+                let tile_world_pos = Vector2::new(
+                    i as f32 * self.tile_size as f32,
+                    j as f32 * self.tile_size as f32,
+                );
+
+                // Convert the world position to screen position
+                let tile_screen_pos = Self::entity_to_screen(tile_world_pos, camera);
+
+                let dest_rect = Rectangle {
+                    x: tile_screen_pos.x,
+                    y: tile_screen_pos.y,
+                    width: self.tile_size * camera.zoom,
+                    height: self.tile_size * camera.zoom,
+                };
+
+                let texture_section = match self.data[i][j] {
+                    Blocks::STONE => Rectangle {
+                        x: 0.0,
+                        y: 32.0,
+                        width: 32.0,
+                        height: 32.0,
+                    },
+                    Blocks::GRASS => Rectangle {
+                        x: 32.0,
+                        y: 32.0,
+                        width: 32.0,
+                        height: 32.0,
+                    },
+                    _ => Rectangle {
+                        x: 0.0,
+                        y: 0.0,
+                        width: 32.0,
+                        height: 32.0,
+                    },
+                };
+
+                d.draw_texture_pro(
+                    texture_atlas,
+                    texture_section,
+                    dest_rect,
+                    Vector2::new(0.0, 0.0),
+                    0.0,
+                    Color::WHITE,
+                );
+            }
         }
     }
 
