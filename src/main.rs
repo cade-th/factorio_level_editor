@@ -7,7 +7,7 @@
 
 const SCREEN_WIDTH: i32 = 1024;
 const SCREEN_HEIGHT: i32 = 1024;
-const WORLD_SIZE: usize = 16;
+const WORLD_SIZE: usize = 64;
 
 use raylib::prelude::*;
 use render::Renderer;

@@ -26,7 +26,7 @@ impl World {
         World {
             data: vec![vec![Blocks::GRASS; size as usize]; size as usize],
             size,
-            tile_size: (size as f32 * size as f32),
+            tile_size: 64.0,
         }
     }
 
@@ -93,13 +93,18 @@ impl World {
     pub fn data_to_file(&self, file_name: &str) -> io::Result<()> {
         let mut file = File::create(file_name)?;
 
+        // Write the size of the world as a 4-byte integer
+        let size_bytes = (self.size as u32).to_le_bytes();
+        file.write_all(&size_bytes)?;
+
+        // Write the world data
         for row in &self.data {
             for &block in row {
                 file.write_all(&[block.to_u8()])?;
             }
         }
 
-        println!("world data saved to {}", file_name);
+        println!("World data (size: {}) saved to {}", self.size, file_name);
         Ok(())
     }
 }
