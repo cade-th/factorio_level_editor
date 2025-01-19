@@ -58,10 +58,6 @@ impl Selector {
         )
     }
 
-    // TODO:
-    // 1. add remove block function
-    // 2. add otther blocks to place
-
     pub fn mov(&mut self, world: &mut World, camera: &mut Camera2D) {
         unsafe {
             // Movement keys

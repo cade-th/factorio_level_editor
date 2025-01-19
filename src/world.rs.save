@@ -63,7 +63,7 @@ impl World {
                         y: 32.0,
                         width: 32.0,
                         height: 32.0,
-                    },
+k                    },
                     Blocks::GRASS => Rectangle {
                         x: 32.0,
                         y: 32.0,
@@ -97,10 +97,6 @@ impl World {
         let size_bytes = (self.size as u32).to_le_bytes();
         file.write_all(&size_bytes)?;
 
-        // Write the tile size as a 4-byte floating-point value
-        let tile_size_bytes = self.tile_size.to_le_bytes();
-        file.write_all(&tile_size_bytes)?;
-
         // Write the world data
         for row in &self.data {
             for &block in row {
@@ -108,11 +104,7 @@ impl World {
             }
         }
 
-        println!(
-            "World data (size: {}, tile_size: {}) saved to {}",
-            self.size, self.tile_size, file_name
-        );
+        println!("World data (size: {}) saved to {}", self.size, file_name);
         Ok(())
     }
 }
-
